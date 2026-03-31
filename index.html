@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChipIn - Never miss an important LinkedIn conversation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background: #fff;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        header {
+            padding: 20px 0;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #0a66c2;
+        }
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+            background: linear-gradient(135deg, #f0f7ff 0%, #fff 100%);
+        }
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #1a1a1a;
+        }
+        .hero p {
+            font-size: 1.25rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+        .cta-button {
+            display: inline-block;
+            background: #0a66c2;
+            color: white;
+            padding: 16px 32px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: background 0.3s;
+        }
+        .cta-button:hover {
+            background: #004182;
+        }
+        .problem {
+            padding: 80px 0;
+            background: #fef3f3;
+        }
+        .problem h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .problem-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .problem p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+        .problem ul {
+            list-style: none;
+            margin: 30px 0;
+        }
+        .problem li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        .problem li::before {
+            content: "✗";
+            position: absolute;
+            left: 0;
+            color: #d93025;
+        }
+        .stat {
+            background: #fff;
+            border-left: 4px solid #d93025;
+            padding: 20px;
+            margin-top: 30px;
+            font-size: 1.1rem;
+        }
+        .solution {
+            padding: 80px 0;
+        }
+        .solution h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .solution > p {
+            text-align: center;
+            font-size: 1.25rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto 50px;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .feature {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 12px;
+        }
+        .feature h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #0a66c2;
+        }
+        .social-proof {
+            text-align: center;
+            padding: 60px 0;
+            background: #f0f7ff;
+        }
+        .social-proof p {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        .waitlist {
+            padding: 80px 0;
+            text-align: center;
+        }
+        .waitlist h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        .waitlist p {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .email-form {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .email-form input {
+            padding: 16px 24px;
+            border: 2px solid #e5e5e5;
+            border-radius: 30px;
+            font-size: 1rem;
+            width: 300px;
+            max-width: 100%;
+        }
+        .email-form button {
+            background: #0a66c2;
+            color: white;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .email-form button:hover {
+            background: #004182;
+        }
+        footer {
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid #e5e5e5;
+            color: #666;
+        }
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .hero p {
+                font-size: 1rem;
+            }
+            .problem h2, .solution h2, .waitlist h2 {
+                font-size: 1.8rem;
+            }
+            .email-form {
+                flex-direction: column;
+                align-items: center;
+            }
+            .email-form input {
+                width: 100%;
+            }
+            .email-form button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">ChipIn</div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Never miss an important LinkedIn conversation</h1>
+            <p>Get reliable notifications and discover conversations LinkedIn hides from you. Stop missing opportunities because the algorithm buried the wrong message.</p>
+            <a href="#waitlist" class="cta-button">Join the waitlist</a>
+        </div>
+    </section>
+
+    <section class="problem">
+        <div class="container">
+            <h2>LinkedIn is hiding your conversations</h2>
+            <div class="problem-content">
+                <p>LinkedIn serves 950 million members. But their algorithm decides which messages you see - and it is notoriously unreliable.</p>
+                <ul>
+                    <li>You get a notification but the message is nowhere to be found</li>
+                    <li>Important conversations get buried under AI-generated content</li>
+                    <li>You miss opportunities because you never saw the right message at the right time</li>
+                </ul>
+                <div class="stat">
+                    86% of LinkedIn reviews are 1-star. The top complaint? Notification failures and missing messages.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="solution">
+        <div class="container">
+            <h2>ChipIn: Your LinkedIn conversation companion</h2>
+            <p>ChipIn ensures you never miss an important LinkedIn conversation again.</p>
+            <div class="features">
+                <div class="feature">
+                    <h3>Reliable notifications</h3>
+                    <p>Get alerts for messages that actually matter</p>
+                </div>
+                <div class="feature">
+                    <h3>Conversation discovery</h3>
+                    <p>Surface conversations LinkedIn buried</p>
+                </div>
+                <div class="feature">
+                    <h3>Smart filtering</h3>
+                    <p>Focus on conversations that move your career forward</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="social-proof">
+        <div class="container">
+            <p>Join thousands of professionals who never miss an important LinkedIn message.</p>
+        </div>
+    </section>
+
+    <section class="waitlist" id="waitlist">
+        <div class="container">
+            <h2>Be the first to know</h2>
+            <p>Early supporters get founding member pricing when we launch.</p>
+            <form class="email-form" action="https://formspree.io/f/placeholder" method="POST">
+                <input type="email" name="email" placeholder="Enter your email" required>
+                <input type="hidden" name="_to" value="chipin.waitlist">
+                <button type="submit">Join the waitlist</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>ChipIn - Coming soon to iOS and Android</p>
+        </div>
+    </footer>
+</body>
+</html>
