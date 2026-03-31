@@ -35,6 +35,8 @@ jobs:
       - name: Build
         run: npm run build
         working-directory: ./chipin-web
+      - name: Add .nojekyll
+        run: touch chipin-web/out/.nojekyll
       - name: Setup Pages
         uses: actions/configure-pages@v5
         with:
