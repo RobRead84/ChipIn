@@ -60,7 +60,7 @@ function MagneticButton({ children, className = "", type = "button" as const, di
   );
 }
 
-const FORMSPREE_URL = "https://formspree.io/f/placeholder";
+const FORMSPREE_URL = "https://formspree.io/f/meepkwde";
 
 function WaitlistForm() {
   const [step, setStep] = useState<"email" | "demographics" | "success">("email");
