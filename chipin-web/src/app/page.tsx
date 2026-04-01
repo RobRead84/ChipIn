@@ -293,8 +293,8 @@ export default function Home() {
         <div className="absolute bottom-20 right-[5%] w-[500px] h-[500px] bg-slate/10 rounded-full blur-[100px]" />
         
         <div className="relative z-10 max-w-6xl mx-auto px-6 w-full">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div className="text-center">
+          <div className="grid md:grid-cols-2 gap-8 place-items-center">
+            <div className="col-start-1 row-start-1 text-center w-full">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
