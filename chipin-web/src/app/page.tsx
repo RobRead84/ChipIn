@@ -463,7 +463,7 @@ export default function Home() {
       <section className="py-12 px-6 bg-cream">
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-2xl md:text-3xl font-bold text-foreground leading-snug">
-            Join a wave of new professionals who want to discover new LinkedIn messages and create a bigger network.
+            Join a wave of new professionals who want to discover new connections and create a bigger network.
           </p>
         </div>
       </section>
@@ -480,12 +480,10 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="py-10 px-6 bg-foreground">
-        <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      <footer className="py-6 px-6 bg-foreground">
+        <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-blue flex items-center justify-center">
-              <span className="text-white font-bold text-sm">C</span>
-            </div>
+            <img src="/logo.png" alt="ChipIn" className="w-8 h-8 rounded-lg object-contain" />
             <span className="font-bold text-lg text-white">ChipIn</span>
           </div>
           <p className="text-cream text-sm">
