@@ -217,71 +217,134 @@ function WaitlistForm({ compact = false }: { compact?: boolean }) {
   );
 }
 
+function PhoneMockup() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: 50 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ type: "spring", stiffness: 80, damping: 20, delay: 0.2 }}
+      className="relative w-[280px] md:w-[320px] mx-auto md:mx-0"
+    >
+      <div className="absolute inset-0 bg-gradient-to-br from-blue/20 to-slate/20 rounded-[3rem] blur-2xl" />
+      <div className="relative bg-charcoal rounded-[3rem] p-2 shadow-2xl">
+        <div className="bg-foreground rounded-[2.5rem] overflow-hidden border-4 border-charcoal">
+          <div className="bg-charcoal px-6 py-3 flex items-center justify-between">
+            <div className="w-16 h-6 bg-foreground rounded-full" />
+            <div className="flex gap-1">
+              <div className="w-2 h-2 bg-blue rounded-full" />
+              <div className="w-2 h-2 bg-slate rounded-full" />
+              <div className="w-2 h-2 bg-green rounded-full" />
+            </div>
+          </div>
+          <div className="bg-white p-4 space-y-3">
+            <div className="flex items-center gap-3 p-2 bg-blue/5 rounded-xl border border-blue/20">
+              <div className="w-10 h-10 bg-blue rounded-full flex items-center justify-center">
+                <span className="text-white text-sm font-bold">C</span>
+              </div>
+              <div className="flex-1">
+                <p className="text-xs font-semibold text-foreground">ChipIn</p>
+                <p className="text-[10px] text-gray">Never miss a message</p>
+              </div>
+              <span className="text-[10px] text-gray">now</span>
+            </div>
+            <div className="p-3 bg-foreground/5 rounded-xl">
+              <p className="text-xs text-foreground font-medium">3 new conversations found</p>
+              <p className="text-[10px] text-gray mt-1">LinkedIn buried these from you</p>
+            </div>
+            <div className="flex items-center gap-2 p-2 bg-blue/10 rounded-lg">
+              <div className="w-8 h-8 bg-blue rounded-lg flex items-center justify-center">
+                <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <span className="text-xs font-medium text-foreground">Sarah from Sales replied</span>
+            </div>
+            <div className="flex items-center gap-2 p-2 bg-blue/10 rounded-lg">
+              <div className="w-8 h-8 bg-blue rounded-lg flex items-center justify-center">
+                <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <span className="text-xs font-medium text-foreground">Recruiter sent opportunity</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 export default function Home() {
   const [showHeroForm, setShowHeroForm] = useState(false);
 
   return (
     <main className="flex-1">
-      <section className="relative min-h-[70dvh] flex items-center justify-center overflow-hidden bg-white py-12">
+      <section className="relative min-h-[70dvh] flex items-center overflow-hidden bg-white py-12">
         <div className="absolute inset-0 bg-gradient-to-br from-white via-[#f8f7f4] to-cream/30" />
-        <div className="absolute top-20 left-[10%] w-[400px] h-[400px] bg-blue/5 rounded-full blur-[100px]" />
-        <div className="absolute bottom-20 right-[10%] w-[500px] h-[500px] bg-slate/10 rounded-full blur-[100px]" />
+        <div className="absolute top-20 left-[5%] w-[400px] h-[400px] bg-blue/5 rounded-full blur-[100px]" />
+        <div className="absolute bottom-20 right-[5%] w-[500px] h-[500px] bg-slate/10 rounded-full blur-[100px]" />
         
-        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <span className="inline-block px-4 py-2 rounded-full bg-blue text-white text-xs font-semibold mb-6 shadow-lg shadow-blue/20">
-              Coming soon to iOS and Android
-            </span>
-          </motion.div>
-          
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.1 }}
-            className="text-4xl md:text-6xl font-bold tracking-tighter text-foreground mb-4 leading-[1.1]"
-          >
-            Never miss an important
-            <span className="block text-blue">LinkedIn conversation</span>
-          </motion.h1>
-          
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.2 }}
-            className="text-lg md:text-xl text-gray max-w-2xl mx-auto mb-8 leading-relaxed"
-          >
-            Get reliable notifications and discover conversations LinkedIn hides from you.
-          </motion.p>
-          
-          {!showHeroForm ? (
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.3 }}
-            >
-              <MagneticButton
-                onClick={() => setShowHeroForm(true)}
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-foreground text-white font-bold text-lg cursor-pointer shadow-xl shadow-foreground/20"
+        <div className="relative z-10 max-w-6xl mx-auto px-6 w-full">
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div className="text-center md:text-left">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
               >
-                Join the waitlist
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </MagneticButton>
-            </motion.div>
-          ) : (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="max-w-md mx-auto"
-            >
-              <WaitlistForm compact />
-            </motion.div>
-          )}
+                <span className="inline-block px-4 py-2 rounded-full bg-blue text-white text-sm font-semibold mb-6 shadow-lg shadow-blue/20">
+                  Coming soon to iOS and Android
+                </span>
+              </motion.div>
+              
+              <motion.h1
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.1 }}
+                className="text-5xl md:text-7xl font-bold tracking-tighter text-foreground mb-4 leading-[1.05]"
+              >
+                Never miss an important
+                <span className="block text-blue">LinkedIn conversation</span>
+              </motion.h1>
+              
+              <motion.p
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.2 }}
+                className="text-xl md:text-2xl text-gray mb-8 leading-relaxed"
+              >
+                Get reliable notifications and discover conversations LinkedIn hides from you.
+              </motion.p>
+              
+              {!showHeroForm ? (
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.3 }}
+                >
+                  <MagneticButton
+                    onClick={() => setShowHeroForm(true)}
+                    className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-foreground text-white font-bold text-lg cursor-pointer shadow-xl shadow-foreground/20"
+                  >
+                    Join the waitlist
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </MagneticButton>
+                </motion.div>
+              ) : (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="max-w-md"
+                >
+                  <WaitlistForm compact />
+                </motion.div>
+              )}
+            </div>
+            
+            <PhoneMockup />
+          </div>
         </div>
       </section>
 
