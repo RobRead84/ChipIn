@@ -257,7 +257,7 @@ function PhoneMockup() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
-              <span className="text-xs font-medium text-foreground">Sarah from Sales replied</span>
+              <span className="text-xs font-medium text-foreground">Apple has released new tech</span>
             </div>
             <div className="flex items-center gap-2 p-2 bg-blue/10 rounded-lg">
               <div className="w-8 h-8 bg-blue rounded-lg flex items-center justify-center">
@@ -265,7 +265,15 @@ function PhoneMockup() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
-              <span className="text-xs font-medium text-foreground">Recruiter sent opportunity</span>
+              <span className="text-xs font-medium text-foreground">Marie has connected with CEO at Apple</span>
+            </div>
+            <div className="flex items-center gap-2 p-2 bg-blue/10 rounded-lg">
+              <div className="w-8 h-8 bg-blue rounded-lg flex items-center justify-center">
+                <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <span className="text-xs font-medium text-foreground">Apple CEO has started a new community for Gen Z</span>
             </div>
           </div>
         </div>
@@ -286,7 +294,7 @@ export default function Home() {
         
         <div className="relative z-10 max-w-6xl mx-auto px-6 w-full">
           <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div className="text-center md:text-left">
+            <div className="text-center">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -357,7 +365,7 @@ export default function Home() {
             className="text-center mb-10"
           >
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-3">
-              LinkedIn is hiding your conversations
+              Have you ever noticed how the algorithm is just showing you the same mundane stuff? This is because Linkedin is hiding conversations from you.
             </h2>
             <p className="text-lg text-cream max-w-xl mx-auto">
               LinkedIn serves 950 million members. But their algorithm decides which messages you see.
@@ -455,7 +463,7 @@ export default function Home() {
       <section className="py-12 px-6 bg-cream">
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-2xl md:text-3xl font-bold text-foreground leading-snug">
-            Join thousands of professionals who never miss an important LinkedIn message.
+            Join a wave of new professionals who want to discover new LinkedIn messages and create a bigger network.
           </p>
         </div>
       </section>
