@@ -484,7 +484,7 @@ export default function Home() {
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
           <div className="flex items-center gap-3">
             <img src="/logo.png" alt="ChipIn" className="w-8 h-8 rounded-lg object-contain" />
-            <span className="font-bold text-lg text-white">ChipIn</span>
+            <span className="font-bold text-lg text-white">ChipIn. Speak up, Stand out.</span>
           </div>
           <p className="text-cream text-sm">
             Coming soon to iOS and Android
