@@ -1,496 +1,490 @@
 "use client";
-import { motion, useMotionValue, useSpring } from "framer-motion";
-import { useRef, useState } from "react";
+import { motion } from "framer-motion";
 
 const FORMSPREE_URL = "https://formspree.io/f/meepkwde";
 
-function MagneticButton({ children, className = "", type = "button" as const, disabled = false, onClick, ...props }: { children: React.ReactNode; className?: string; type?: "button" | "submit" | "reset"; disabled?: boolean; onClick?: () => void }) {
-  const ref = useRef<HTMLButtonElement>(null);
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const springX = useSpring(x, { stiffness: 200, damping: 15 });
-  const springY = useSpring(y, { stiffness: 200, damping: 15 });
-
+function Header() {
   return (
-    <motion.button
-      ref={ref}
-      type={type}
-      disabled={disabled}
-      onClick={onClick}
-      style={{ x: springX, y: springY }}
-      onMouseMove={(e) => {
-        if (disabled) return;
-        const rect = ref.current!.getBoundingClientRect();
-        const dx = e.clientX - (rect.left + rect.width / 2);
-        const dy = e.clientY - (rect.top + rect.height / 2);
-        x.set(dx * 0.3);
-        y.set(dy * 0.3);
-      }}
-      onMouseLeave={() => { x.set(0); y.set(0); }}
-      whileHover={disabled ? undefined : { scale: 1.02 }}
-      whileTap={disabled ? undefined : { scale: 0.98 }}
-      className={className}
-      {...props}
-    >
-      {children}
-    </motion.button>
+    <header style={{
+      padding: '20px 32px',
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      borderBottom: '2px solid var(--color-black)',
+    }}>
+      <div style={{
+        fontFamily: 'var(--font-archivo-black), Archivo Black, sans-serif',
+        fontSize: '1.6rem',
+        textTransform: 'uppercase',
+        letterSpacing: '0.05em',
+      }}>
+        CHIP<span style={{ color: 'var(--color-accent)' }}>IN</span>
+      </div>
+      <a
+        href="#waitlist"
+        style={{
+          fontFamily: 'var(--font-space-mono), monospace',
+          fontSize: '0.8rem',
+          textDecoration: 'none',
+          border: '2px solid var(--color-black)',
+          padding: '8px 16px',
+          color: 'var(--color-black)',
+          textTransform: 'uppercase',
+        }}
+      >
+        Get access
+      </a>
+    </header>
   );
 }
 
-function WaitlistForm({ compact = false }: { compact?: boolean }) {
-  const [step, setStep] = useState<"email" | "demographics" | "success">("email");
-  const [email, setEmail] = useState("");
-  const [role, setRole] = useState("");
-  const [challenge, setChallenge] = useState("");
-  const [source, setSource] = useState("");
-  const [consent, setConsent] = useState(false);
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-  const [error, setError] = useState("");
-
-  const handleEmailSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email) return;
-    setStep("demographics");
-  };
-
-  const handleDemographicsSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setStatus("loading");
-    setError("");
-
-    const formData = new FormData();
-    formData.append("email", email);
-    formData.append("role", role);
-    formData.append("challenge", challenge);
-    formData.append("source", source);
-    formData.append("consent", String(consent));
-    formData.append("_to", "chipin.waitlist");
-
-    try {
-      const res = await fetch(FORMSPREE_URL, {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!res.ok) {
-        throw new Error("Failed to submit");
-      }
-
-      setStep("success");
-    } catch {
-      setError("Something went wrong. Please try again.");
-    }
-    setStatus("idle");
-  };
-
-  if (step === "success") {
-    return (
+function Hero() {
+  return (
+    <section style={{
+      padding: '120px 32px 100px',
+      maxWidth: '1000px',
+    }}>
       <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className={`rounded-2xl bg-blue p-6 text-center ${compact ? "max-w-sm" : "max-w-lg mx-auto"}`}
-      >
-        <p className="text-white font-bold text-xl mb-1">You are on the list!</p>
-        <p className="text-white/80 text-sm mb-4">We will be in touch when ChipIn launches.</p>
-        {compact ? null : <p className="text-white/60 text-xs mb-4">Expected launch: Q2 2026</p>}
-        <a
-          href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2FRobRead84.github.io%2FChipIn"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/20 text-white text-sm font-medium hover:bg-white/30 transition-colors"
-        >
-          Share on LinkedIn
-        </a>
-      </motion.div>
-    );
-  }
-
-  if (step === "demographics") {
-    return (
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className={`${compact ? "max-w-md" : "w-full max-w-lg mx-auto"}`}
+        transition={{ duration: 0.6 }}
+        style={{
+          fontFamily: 'var(--font-space-mono), monospace',
+          fontSize: '0.75rem',
+          color: 'var(--color-accent)',
+          textTransform: 'uppercase',
+          letterSpacing: '0.2em',
+          marginBottom: '32px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '12px',
+        }}
       >
-        <p className="text-gray text-center mb-4 text-sm">(All questions optional - you can skip)</p>
-        <form onSubmit={handleDemographicsSubmit} className="space-y-4">
-          <div className="bg-white rounded-xl p-4 border-2 border-foreground/10">
-            <label className="block text-foreground font-medium mb-2 text-sm">I am a...</label>
-            <div className="grid grid-cols-2 gap-2">
-              {["Sales Professional", "Recruiter", "Job Seeker", "Other"].map((r) => (
-                <button
-                  key={r}
-                  type="button"
-                  onClick={() => setRole(role === r ? "" : r)}
-                  className={`px-3 py-2 rounded-lg border-2 transition-all text-sm ${
-                    role === r
-                      ? "border-blue bg-blue/5 text-blue font-medium"
-                      : "border-foreground/20 text-foreground hover:border-foreground/40"
-                  }`}
-                >
-                  {r}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="bg-white rounded-xl p-4 border-2 border-foreground/10">
-            <label className="block text-foreground font-medium mb-2 text-sm">My main challenge is...</label>
-            <div className="space-y-1">
-              {["Missing messages", "Networking blind spots", "Staying visible", "Other"].map((c) => (
-                <label
-                  key={c}
-                  className={`flex items-center gap-2 p-2 rounded-lg border-2 cursor-pointer transition-all text-sm ${
-                    challenge === c
-                      ? "border-blue bg-blue/5"
-                      : "border-foreground/20 hover:border-foreground/40"
-                  }`}
-                >
-                  <input
-                    type="radio"
-                    name="challenge"
-                    value={c}
-                    checked={challenge === c}
-                    onChange={(e) => setChallenge(e.target.value)}
-                    className="w-4 h-4 accent-blue"
-                  />
-                  <span className={challenge === c ? "text-blue font-medium" : "text-foreground"}>{c}</span>
-                </label>
-              ))}
-            </div>
-          </div>
-
-          <label className="flex items-start gap-2 p-3 bg-white rounded-xl border-2 border-foreground/10 cursor-pointer">
-            <input
-              type="checkbox"
-              checked={consent}
-              onChange={(e) => setConsent(e.target.checked)}
-              className="w-4 h-4 mt-0.5 accent-blue"
-            />
-            <span className="text-foreground/70 text-xs">I agree to receive updates from ChipIn.</span>
-          </label>
-
-          {error && (
-            <p className="text-red-500 text-center text-xs">{error}</p>
-          )}
-
-          <div className="flex gap-2">
-            <button
-              type="button"
-              onClick={() => setStep("email")}
-              className="px-4 py-2 rounded-full border-2 border-foreground/20 text-foreground text-sm font-medium hover:border-foreground/40 transition-colors"
-            >
-              Back
-            </button>
-            <MagneticButton
-              type="submit"
-              className="flex-1 px-4 py-2 rounded-full bg-blue text-white text-sm font-semibold cursor-pointer"
-              disabled={status === "loading"}
-            >
-              {status === "loading" ? "Submitting..." : "Complete Signup"}
-            </MagneticButton>
-          </div>
-        </form>
+        <span style={{
+          display: 'block',
+          width: '40px',
+          height: '2px',
+          background: 'var(--color-accent)',
+        }} />
+        LinkedIn conversation discovery
       </motion.div>
-    );
-  }
+
+      <motion.h1
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ type: 'spring', stiffness: 100, damping: 20, delay: 0.1 }}
+        style={{
+          fontFamily: 'var(--font-archivo-black), Archivo Black, sans-serif',
+          fontSize: 'clamp(3rem, 7vw, 5.5rem)',
+          lineHeight: 0.95,
+          textTransform: 'uppercase',
+          letterSpacing: '-0.02em',
+          marginBottom: '32px',
+          color: 'var(--color-black)',
+        }}
+      >
+        Unlock the conversations{' '}
+        <span style={{ color: 'var(--color-accent)', display: 'block' }}>
+          you&apos;re not seeing
+        </span>
+      </motion.h1>
+
+      <motion.p
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ type: 'spring', stiffness: 100, damping: 20, delay: 0.2 }}
+        style={{
+          fontSize: '1.1rem',
+          lineHeight: 1.7,
+          color: 'var(--color-muted)',
+          maxWidth: '520px',
+          marginBottom: '48px',
+        }}
+      >
+        LinkedIn is full of conversations that could change your career, your pipeline, or your next big idea. Most of them never reach your feed. ChipIn finds them for you.
+      </motion.p>
+
+      <motion.a
+        href="#waitlist"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ type: 'spring', stiffness: 100, damping: 20, delay: 0.3 }}
+        style={{
+          display: 'inline-block',
+          background: 'var(--color-black)',
+          color: 'var(--color-bg)',
+          padding: '16px 40px',
+          fontFamily: 'var(--font-space-mono), monospace',
+          fontSize: '0.85rem',
+          fontWeight: 700,
+          textTransform: 'uppercase',
+          letterSpacing: '0.1em',
+          textDecoration: 'none',
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = 'translate(-3px, -3px)';
+          e.currentTarget.style.boxShadow = '5px 5px 0 var(--color-accent)';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = 'translate(0, 0)';
+          e.currentTarget.style.boxShadow = 'none';
+        }}
+      >
+        Get early access →
+      </motion.a>
+    </section>
+  );
+}
+
+function ProblemSection() {
+  const painPoints = [
+    "You get a notification but the message is nowhere to be found",
+    "A connection shared a career-changing opportunity — you saw it 3 days later when it was too late",
+    "An industry conversation could have changed your next move. You never knew it happened",
+  ];
 
   return (
-    <div className={`${compact ? "max-w-md" : "w-full max-w-md mx-auto"}`}>
-      <form onSubmit={handleEmailSubmit} className="flex flex-col sm:flex-row gap-2">
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Enter your email"
-          required
-          className="flex-1 px-4 py-3 rounded-full border-2 border-foreground/20 bg-white focus:outline-none focus:border-blue transition-colors text-foreground text-sm"
-        />
-        <MagneticButton
-          type="submit"
-          className="px-6 py-3 rounded-full bg-blue text-white font-semibold cursor-pointer text-sm"
-        >
-          Join waitlist
-        </MagneticButton>
-      </form>
+    <section style={{
+      background: 'var(--color-black)',
+      color: 'var(--color-bg)',
+      borderTop: '2px solid var(--color-black)',
+      padding: '80px 32px',
+    }}>
+      <div style={{ maxWidth: '1000px' }}>
+        <p style={{
+          fontSize: '1.3rem',
+          lineHeight: 1.6,
+          marginBottom: '48px',
+          maxWidth: '700px',
+          color: 'var(--color-dim)',
+        }}>
+          <strong style={{ color: 'var(--color-bg)' }}>LinkedIn is the most important professional network in the world.</strong> It&apos;s where careers are built, deals are made, and industries share what they&apos;re thinking. There&apos;s more valuable conversation happening on LinkedIn right now than on any other platform.
+        </p>
+        <p style={{
+          fontSize: '1.3rem',
+          lineHeight: 1.6,
+          marginBottom: '48px',
+          maxWidth: '700px',
+          color: 'var(--color-dim)',
+        }}>
+          The problem is, you&apos;re only seeing a fraction of it. LinkedIn&apos;s feed is built around your existing network and engagement patterns — showing you more of what you&apos;ve already seen, and less of what you haven&apos;t discovered yet.
+        </p>
+
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3, 1fr)',
+          gap: '2px',
+          background: 'var(--color-border-dark)',
+        }}>
+          {painPoints.map((point, i) => (
+            <div
+              key={i}
+              style={{
+                background: 'var(--color-black)',
+                padding: '32px',
+              }}
+            >
+              <div style={{
+                fontFamily: 'var(--font-archivo-black), Archivo Black, sans-serif',
+                fontSize: '3rem',
+                color: 'var(--color-accent)',
+                opacity: 0.4,
+                lineHeight: 1,
+                marginBottom: '16px',
+              }}>
+                {String(i + 1).padStart(2, '0')}
+              </div>
+              <p style={{
+                fontSize: '0.9rem',
+                lineHeight: 1.6,
+                color: 'var(--color-dim)',
+              }}>
+                {point}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <div style={{
+          marginTop: '2px',
+          background: 'var(--color-accent)',
+          color: 'var(--color-white)',
+          padding: '24px 32px',
+          fontFamily: 'var(--font-space-mono), monospace',
+          fontSize: '0.85rem',
+          lineHeight: 1.5,
+        }}>
+          RATED 1.2/5 ON TRUSTPILOT → 3,000+ reviews. Broken notifications and buried messages among top complaints.
+          <br />
+          <a
+            href="https://trustpilot.com/review/www.linkedin.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.75rem' }}
+          >
+            trustpilot.com/review/www.linkedin.com
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FeaturesSection() {
+  const features = [
+    {
+      label: 'DISCOVERY',
+      title: 'Conversation Discovery',
+      desc: "LinkedIn is where your industry talks. ChipIn surfaces the threads, posts, and discussions that matter to you — the ones LinkedIn's feed wasn't built to show you. More signal. Less algorithm.",
+      hero: true,
+    },
+    {
+      label: 'DM RELIABILITY',
+      title: 'Never miss a DM',
+      desc: 'LinkedIn notifications are unreliable. ChipIn delivers your direct messages consistently, so opportunities don\'t slip through the cracks.',
+      hero: false,
+    },
+    {
+      label: 'YOUR SIGNALS',
+      title: 'You define what matters',
+      desc: 'Set your signals — job titles, topics, companies, keywords. ChipIn finds the conversations that match, so LinkedIn works around what you care about.',
+      hero: false,
+    },
+    {
+      label: 'YOUR NETWORK',
+      title: 'More from the network you\'ve already built',
+      desc: "You've spent years building your LinkedIn network. ChipIn helps you get more value from it by surfacing what the algorithm filters out.",
+      hero: false,
+    },
+  ];
+
+  return (
+    <section style={{
+      padding: '80px 32px',
+      maxWidth: '1000px',
+    }}>
+      <h2 style={{
+        fontFamily: 'var(--font-archivo-black), Archivo Black, sans-serif',
+        fontSize: '2.5rem',
+        textTransform: 'uppercase',
+        marginBottom: '48px',
+        color: 'var(--color-black)',
+      }}>
+        What ChipIn does
+      </h2>
+
+      <div style={{ display: 'grid', gap: 0 }}>
+        {features.map((feature, i) => (
+          <div
+            key={i}
+            style={{
+              display: 'grid',
+              gridTemplateColumns: feature.hero ? '200px 1fr' : '200px 1fr',
+              borderTop: i === 0 ? '2px solid var(--color-black)' : '2px solid var(--color-border)',
+              padding: feature.hero ? '40px 0' : '28px 0',
+              borderBottom: i === features.length - 1 ? '2px solid var(--color-border)' : 'none',
+            }}
+          >
+            <h3 style={{
+              fontFamily: 'var(--font-space-mono), monospace',
+              fontSize: '0.8rem',
+              textTransform: 'uppercase',
+              letterSpacing: '0.08em',
+              color: 'var(--color-accent)',
+              paddingTop: '4px',
+            }}>
+              {feature.label}
+            </h3>
+            <p style={{
+              fontSize: feature.hero ? '1.05rem' : '0.95rem',
+              lineHeight: 1.6,
+              color: feature.hero ? 'var(--color-black)' : 'var(--color-muted)',
+              maxWidth: '500px',
+            }}>
+              {feature.desc}
+            </p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function CredibilityStrip() {
+  return (
+    <div style={{
+      padding: '40px 32px',
+      borderTop: '2px solid var(--color-border)',
+    }}>
+      <div style={{
+        maxWidth: '1000px',
+        display: 'flex',
+        gap: '48px',
+        alignItems: 'baseline',
+      }}>
+        <p style={{
+          fontFamily: 'var(--font-space-mono), monospace',
+          fontSize: '0.8rem',
+          color: 'var(--color-muted)',
+          lineHeight: 1.6,
+        }}>
+          <strong style={{ color: 'var(--color-black)', fontWeight: 400 }}>
+            We&apos;re building ChipIn with input from early testers.
+          </strong>{' '}
+          Join the waitlist to shape what we build.
+        </p>
+        <p style={{
+          fontFamily: 'var(--font-space-mono), monospace',
+          fontSize: '0.8rem',
+          color: 'var(--color-muted)',
+          lineHeight: 1.6,
+        }}>
+          Built by professionals who got tired of missing the conversations that matter.
+        </p>
+      </div>
     </div>
   );
 }
 
-function PhoneMockup() {
+function WaitlistSection() {
   return (
-    <motion.div
-      initial={{ opacity: 0, x: 50 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ type: "spring", stiffness: 80, damping: 20, delay: 0.2 }}
-      className="relative w-[280px] md:w-[320px] mx-auto md:mx-0"
+    <section
+      id="waitlist"
+      style={{
+        background: 'var(--color-black)',
+        color: 'var(--color-bg)',
+        padding: '80px 32px',
+        textAlign: 'center',
+      }}
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-blue/20 to-slate/20 rounded-[3rem] blur-2xl" />
-      <div className="relative bg-charcoal rounded-[3rem] p-2 shadow-2xl">
-        <div className="bg-foreground rounded-[2.5rem] overflow-hidden border-4 border-charcoal">
-          <div className="bg-charcoal px-6 py-3 flex items-center justify-between">
-            <div className="w-16 h-6 bg-foreground rounded-full" />
-            <div className="flex gap-1">
-              <div className="w-2 h-2 bg-blue rounded-full" />
-              <div className="w-2 h-2 bg-slate rounded-full" />
-              <div className="w-2 h-2 bg-green rounded-full" />
-            </div>
-          </div>
-          <div className="bg-white p-4 space-y-3">
-            <div className="flex items-center gap-3 p-2 bg-blue/5 rounded-xl border border-blue/20">
-              <div className="w-10 h-10 bg-blue rounded-full flex items-center justify-center">
-                <span className="text-white text-sm font-bold">C</span>
-              </div>
-              <div className="flex-1">
-                <p className="text-xs font-semibold text-foreground">ChipIn</p>
-                <p className="text-[10px] text-gray">Never miss a message</p>
-              </div>
-              <span className="text-[10px] text-gray">now</span>
-            </div>
-            <div className="p-3 bg-foreground/5 rounded-xl">
-              <p className="text-xs text-foreground font-medium">3 new conversations found</p>
-              <p className="text-[10px] text-gray mt-1">LinkedIn buried these from you</p>
-            </div>
-            <div className="flex items-center gap-2 p-2 bg-blue/10 rounded-lg">
-              <div className="w-8 h-8 bg-blue rounded-lg flex items-center justify-center">
-                <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-              <span className="text-xs font-medium text-foreground">Apple has released new tech</span>
-            </div>
-            <div className="flex items-center gap-2 p-2 bg-blue/10 rounded-lg">
-              <div className="w-8 h-8 bg-blue rounded-lg flex items-center justify-center">
-                <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-              <span className="text-xs font-medium text-foreground">Marie has connected with CEO at Apple</span>
-            </div>
-            <div className="flex items-center gap-2 p-2 bg-blue/10 rounded-lg">
-              <div className="w-8 h-8 bg-blue rounded-lg flex items-center justify-center">
-                <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-              <span className="text-xs font-medium text-foreground">Apple CEO has started a new community for Gen Z</span>
-            </div>
-          </div>
+      <h2 style={{
+        fontFamily: 'var(--font-archivo-black), Archivo Black, sans-serif',
+        fontSize: '2.5rem',
+        textTransform: 'uppercase',
+        marginBottom: '8px',
+        color: 'var(--color-bg)',
+      }}>
+        Be first to try it
+      </h2>
+      <p style={{
+        fontSize: '0.95rem',
+        color: 'var(--color-dim)',
+        marginBottom: '32px',
+      }}>
+        Sign up for early access. Free. No commitment.
+      </p>
+
+      <form
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '12px',
+          maxWidth: '480px',
+          margin: '0 auto',
+        }}
+        onSubmit={async (e) => {
+          e.preventDefault();
+          const formData = new FormData(e.currentTarget);
+          const res = await fetch(FORMSPREE_URL, {
+            method: 'POST',
+            body: formData,
+          });
+          if (res.ok) {
+            e.currentTarget.innerHTML = '<p style="font-family: var(--font-space-mono), monospace; font-size: 1rem; color: var(--color-bg);">You are on the list!</p>';
+          }
+        }}
+      >
+        <div style={{ display: 'flex', gap: 0 }}>
+          <input
+            type="email"
+            name="email"
+            placeholder="your@email.com"
+            required
+            style={{
+              flex: 1,
+              padding: '16px 20px',
+              border: '2px solid var(--color-bg)',
+              background: 'transparent',
+              color: 'var(--color-bg)',
+              fontFamily: 'var(--font-space-mono), monospace',
+              fontSize: '0.85rem',
+            }}
+          />
+          <button
+            type="submit"
+            style={{
+              padding: '16px 28px',
+              background: 'var(--color-accent)',
+              color: 'var(--color-white)',
+              border: '2px solid var(--color-accent)',
+              fontFamily: 'var(--font-space-mono), monospace',
+              fontSize: '0.85rem',
+              fontWeight: 700,
+              textTransform: 'uppercase',
+              cursor: 'pointer',
+              letterSpacing: '0.05em',
+            }}
+          >
+            Join →
+          </button>
         </div>
-      </div>
-    </motion.div>
+        <div style={{ width: '100%' }}>
+          <input
+            type="text"
+            name="challenge"
+            placeholder="What frustrates you most about LinkedIn? (optional)"
+            style={{
+              width: '100%',
+              padding: '14px 20px',
+              border: '1px solid var(--color-border-dark)',
+              background: 'rgba(255,255,255,0.04)',
+              color: 'var(--color-bg)',
+              fontFamily: 'var(--font-work-sans), Work Sans, sans-serif',
+              fontSize: '0.85rem',
+            }}
+          />
+          <p style={{
+            fontSize: '0.7rem',
+            textAlign: 'left',
+            color: 'var(--color-muted)',
+            marginTop: '-4px',
+          }}>
+            Optional — helps us build what you actually need
+          </p>
+        </div>
+        <input type="hidden" name="_to" value="chipin.waitlist" />
+      </form>
+    </section>
+  );
+}
+
+function Footer() {
+  return (
+    <footer style={{
+      padding: '24px 32px',
+      display: 'flex',
+      justifyContent: 'space-between',
+      fontSize: '0.75rem',
+      color: 'var(--color-muted)',
+      fontFamily: 'var(--font-space-mono), monospace',
+      borderTop: '2px solid var(--color-border)',
+    }}>
+      <span>CHIPIN — GET MORE FROM LINKEDIN</span>
+      <span>COMING SOON / iOS + ANDROID</span>
+    </footer>
   );
 }
 
 export default function Home() {
-  const [showHeroForm, setShowHeroForm] = useState(false);
-
   return (
-    <main className="flex-1">
-      <section className="relative min-h-[70dvh] flex items-center overflow-hidden bg-white py-12">
-        <div className="absolute inset-0 bg-gradient-to-br from-white via-[#f8f7f4] to-cream/30" />
-        <div className="absolute top-20 left-[5%] w-[400px] h-[400px] bg-blue/5 rounded-full blur-[100px]" />
-        <div className="absolute bottom-20 right-[5%] w-[500px] h-[500px] bg-slate/10 rounded-full blur-[100px]" />
-        
-        <div className="relative z-10 max-w-6xl mx-auto px-6 w-full">
-          <div className="grid md:grid-cols-2 gap-8 place-items-center">
-            <div className="col-start-1 row-start-1 text-center w-full">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-              >
-                <span className="inline-block px-4 py-2 rounded-full bg-blue text-white text-sm font-semibold mb-6 shadow-lg shadow-blue/20">
-                  Coming soon to iOS and Android
-                </span>
-              </motion.div>
-              
-              <motion.h1
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.1 }}
-                className="text-5xl md:text-7xl font-bold tracking-tighter text-foreground mb-4 leading-[1.05]"
-              >
-                Never miss an important
-                <span className="block text-blue">LinkedIn conversation</span>
-              </motion.h1>
-              
-              <motion.p
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.2 }}
-                className="text-xl md:text-2xl text-gray mb-8 leading-relaxed"
-              >
-                Get reliable notifications and discover conversations LinkedIn hides from you.
-              </motion.p>
-              
-              {!showHeroForm ? (
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.3 }}
-                >
-                  <MagneticButton
-                    onClick={() => setShowHeroForm(true)}
-                    className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-foreground text-white font-bold text-lg cursor-pointer shadow-xl shadow-foreground/20"
-                  >
-                    Join the waitlist
-                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                  </MagneticButton>
-                </motion.div>
-              ) : (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="max-w-md"
-                >
-                  <WaitlistForm compact />
-                </motion.div>
-              )}
-            </div>
-            
-            <PhoneMockup />
-          </div>
-        </div>
-      </section>
-
-      <section className="py-16 px-6 bg-foreground">
-        <div className="max-w-3xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-10"
-          >
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-3">
-              Have you ever noticed how the algorithm is just showing you the same mundane stuff? This is because Linkedin is hiding conversations from you.
-            </h2>
-            <p className="text-lg text-cream max-w-xl mx-auto">
-              LinkedIn serves 950 million members. But their algorithm decides which messages you see.
-            </p>
-          </motion.div>
-
-          <div className="space-y-3">
-            {[
-              "You get a notification but the message is nowhere to be found",
-              "Important conversations get buried under AI-generated content",
-              "You miss opportunities because you never saw the right message"
-            ].map((text, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="flex items-start gap-3 p-4 rounded-xl bg-foreground/50 backdrop-blur-sm border border-white/10"
-              >
-                <div className="w-8 h-8 rounded-full bg-blue flex items-center justify-center flex-shrink-0">
-                  <span className="text-white text-sm font-bold">&#x2717;</span>
-                </div>
-                <p className="text-white text-base leading-relaxed">{text}</p>
-              </motion.div>
-            ))}
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="mt-10 p-6 rounded-2xl bg-blue shadow-xl shadow-blue/30"
-          >
-            <p className="text-lg md:text-xl text-white font-medium leading-relaxed">
-              <strong className="text-2xl">86%</strong> of LinkedIn reviews are 1-star. The top complaint? Notification failures and missing messages.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      <section className="py-16 px-6 bg-gradient-to-b from-white to-[#f8f7f4]">
-        <div className="max-w-5xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-10"
-          >
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-3">
-              ChipIn: Your LinkedIn companion
-            </h2>
-            <p className="text-lg text-gray max-w-xl mx-auto">
-              Never miss an important LinkedIn conversation again.
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-5">
-            {[
-              {
-                icon: <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>,
-                title: "Reliable notifications",
-                desc: "Get alerts for messages that actually matter, delivered every time without fail."
-              },
-              {
-                icon: <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>,
-                title: "Conversation discovery",
-                desc: "Surface conversations LinkedIn buried in the algorithm before they disappear."
-              },
-              {
-                icon: <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" /></svg>,
-                title: "Smart filtering",
-                desc: "Focus on conversations that move your career forward, not noise."
-              }
-            ].map((feature, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="group p-6 rounded-2xl bg-white border-2 border-sand/40 hover:border-blue hover:shadow-lg transition-all duration-300"
-              >
-                <div className="w-12 h-12 rounded-xl bg-blue flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
-                  {feature.icon}
-                </div>
-                <h3 className="text-xl font-bold text-foreground mb-2">{feature.title}</h3>
-                <p className="text-gray text-sm leading-relaxed">{feature.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-12 px-6 bg-cream">
-        <div className="max-w-3xl mx-auto text-center">
-          <p className="text-2xl md:text-3xl font-bold text-foreground leading-snug">
-            Join a wave of new professionals who want to discover new connections and create a bigger network.
-          </p>
-        </div>
-      </section>
-
-      <section id="waitlist" className="py-16 px-6 bg-white">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-3">
-            Be the first to know
-          </h2>
-          <p className="text-lg text-gray mb-8">
-            Early supporters get founding member pricing when we launch.
-          </p>
-          <WaitlistForm />
-        </div>
-      </section>
-
-      <footer className="py-6 px-6 bg-foreground">
-        <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <img src="/ChipIn/logo.png" alt="ChipIn" className="w-8 h-8 rounded-lg object-contain" />
-            <span className="font-bold text-lg text-white">ChipIn. Speak up, Stand out.</span>
-          </div>
-          <p className="text-cream text-sm">
-            Coming soon to iOS and Android
-          </p>
-        </div>
-      </footer>
+    <main style={{ flex: 1 }}>
+      <Header />
+      <Hero />
+      <ProblemSection />
+      <FeaturesSection />
+      <CredibilityStrip />
+      <WaitlistSection />
+      <Footer />
     </main>
   );
 }

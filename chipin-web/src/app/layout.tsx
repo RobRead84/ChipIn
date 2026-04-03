@@ -1,15 +1,28 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Archivo_Black, Space_Mono, Work_Sans } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const archivoBlack = Archivo_Black({
+  variable: "--font-archivo-black",
   subsets: ["latin"],
+  weight: ["400"],
+});
+
+const spaceMono = Space_Mono({
+  variable: "--font-space-mono",
+  subsets: ["latin"],
+  weight: ["400", "700"],
+});
+
+const workSans = Work_Sans({
+  variable: "--font-work-sans",
+  subsets: ["latin"],
+  weight: ["400", "500"],
 });
 
 export const metadata: Metadata = {
-  title: "ChipIn - Never miss an important LinkedIn conversation",
-  description: "Get reliable notifications and discover conversations LinkedIn hides from you. Stop missing opportunities because the algorithm buried the wrong message.",
+  title: "ChipIn - Unlock the LinkedIn conversations you're not seeing",
+  description: "LinkedIn is full of conversations that could change your career, your pipeline, or your next big idea. Most of them never reach your feed. ChipIn finds them for you.",
 };
 
 export default function RootLayout({
@@ -18,7 +31,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} antialiased`}>
+    <html lang="en" className={`${archivoBlack.variable} ${spaceMono.variable} ${workSans.variable} antialiased`}>
       <body className="min-h-[100dvh] flex flex-col">{children}</body>
     </html>
   );
