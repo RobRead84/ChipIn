@@ -155,11 +155,20 @@ function ProblemSection() {
         <p style={{
           fontSize: '1.3rem',
           lineHeight: 1.6,
+          marginBottom: '16px',
+          maxWidth: '700px',
+          color: 'var(--color-dim)',
+        }}>
+          <strong style={{ color: 'var(--color-bg)' }}>LinkedIn is the most important professional network in the world.</strong>
+        </p>
+        <p style={{
+          fontSize: '1.3rem',
+          lineHeight: 1.6,
           marginBottom: '48px',
           maxWidth: '700px',
           color: 'var(--color-dim)',
         }}>
-          <strong style={{ color: 'var(--color-bg)' }}>LinkedIn is the most important professional network in the world.</strong> It&apos;s where careers are built, deals are made, and industries share what they&apos;re thinking. There&apos;s more valuable conversation happening on LinkedIn right now than on any other platform.
+          It&apos;s where careers are built, deals are made, and industries share what they&apos;re thinking. There&apos;s more valuable conversation happening on LinkedIn right now than on any other platform.
         </p>
         <p style={{
           fontSize: '1.3rem',
@@ -360,10 +369,11 @@ function WaitlistSection() {
         textAlign: 'center',
       }}
     >
-      <h2 style={{
+      <h2 className="waitlist-heading" style={{
         fontFamily: 'var(--font-archivo-black), Archivo Black, sans-serif',
         fontSize: '2.5rem',
         textTransform: 'uppercase',
+        lineHeight: 1.2,
         marginBottom: '8px',
         color: 'var(--color-bg)',
       }}>

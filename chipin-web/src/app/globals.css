@@ -18,6 +18,7 @@ body {
   color: var(--color-black);
   font-family: 'Work Sans', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 ::selection {
@@ -35,7 +36,12 @@ html {
   }
 
   .hero-headline {
-    font-size: clamp(2.2rem, 10vw, 3.5rem) !important;
+    font-size: clamp(1.8rem, 9vw, 3rem) !important;
+    word-break: break-word !important;
+  }
+
+  .waitlist-heading {
+    line-height: 1.1 !important;
   }
 
   .pain-grid {
