@@ -428,30 +428,7 @@ function WaitlistSection() {
             Join →
           </button>
         </div>
-        <div style={{ width: '100%' }}>
-          <input
-            type="text"
-            name="challenge"
-            placeholder="What frustrates you most about LinkedIn? (optional)"
-            style={{
-              width: '100%',
-              padding: '14px 20px',
-              border: '1px solid var(--color-border-dark)',
-              background: 'rgba(255,255,255,0.04)',
-              color: 'var(--color-bg)',
-              fontFamily: 'var(--font-work-sans), Work Sans, sans-serif',
-              fontSize: '0.85rem',
-            }}
-          />
-          <p style={{
-            fontSize: '0.7rem',
-            textAlign: 'left',
-            color: 'var(--color-muted)',
-            marginTop: '-4px',
-          }}>
-            Optional — helps us build what you actually need
-          </p>
-        </div>
+
         <input type="hidden" name="_to" value="chipin.waitlist" />
       </form>
     </section>
