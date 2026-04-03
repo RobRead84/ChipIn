@@ -30,6 +30,25 @@ html {
   scroll-behavior: smooth;
 }
 
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--color-bg);
+}
+
+.feature-row-text {
+  transition: color 0.3s ease;
+}
+
+.feature-row-text.active {
+  color: var(--color-black) !important;
+}
+
+.feature-row-text:not(.active) {
+  color: var(--color-muted);
+}
+
 @media (max-width: 768px) {
   .hero-section {
     padding: 80px 24px 60px !important;

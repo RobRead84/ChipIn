@@ -5,7 +5,7 @@ const FORMSPREE_URL = "https://formspree.io/f/meepkwde";
 
 function Header() {
   return (
-    <header className="header-inner" style={{
+    <header className="header-inner sticky-header" style={{
       padding: '20px 32px',
       display: 'flex',
       justifyContent: 'space-between',
@@ -285,9 +285,13 @@ function FeaturesSection() {
 
       <div style={{ display: 'grid', gap: 0 }}>
         {features.map((feature, i) => (
-          <div
+          <motion.div
             className="feature-row"
             key={i}
+            initial={{ opacity: 0.4 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: false, margin: '-20%' }}
+            transition={{ duration: 0.4 }}
             style={{
               display: 'grid',
               gridTemplateColumns: feature.hero ? '200px 1fr' : '200px 1fr',
@@ -314,7 +318,7 @@ function FeaturesSection() {
             }}>
               {feature.desc}
             </p>
-          </div>
+          </motion.div>
         ))}
       </div>
     </section>
