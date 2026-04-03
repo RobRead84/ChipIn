@@ -173,7 +173,7 @@ function ProblemSection() {
         <p style={{
           fontSize: '1.3rem',
           lineHeight: 1.6,
-          marginBottom: '48px',
+          marginBottom: '36px',
           maxWidth: '700px',
           color: 'var(--color-dim)',
         }}>
