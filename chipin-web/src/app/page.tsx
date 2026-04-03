@@ -313,7 +313,7 @@ function FeaturesSection() {
             <p style={{
               fontSize: feature.hero ? '1.05rem' : '0.95rem',
               lineHeight: 1.6,
-              color: feature.hero ? 'var(--color-black)' : 'var(--color-muted)',
+              color: 'var(--color-black)',
               maxWidth: '500px',
             }}>
               {feature.desc}
