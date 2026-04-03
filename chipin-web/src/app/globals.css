@@ -28,3 +28,65 @@ body {
 html {
   scroll-behavior: smooth;
 }
+
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 80px 24px 60px !important;
+  }
+
+  .hero-headline {
+    font-size: clamp(2.2rem, 10vw, 3.5rem) !important;
+  }
+
+  .pain-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .credibility-inner {
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+
+  .footer-inner {
+    flex-direction: column !important;
+    gap: 8px !important;
+    text-align: center !important;
+  }
+
+  .waitlist-form-row {
+    flex-direction: column !important;
+  }
+
+  .waitlist-form-row button {
+    width: 100% !important;
+  }
+
+  .header-inner {
+    padding: 16px 24px !important;
+  }
+
+  .feature-row {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  .problem-section {
+    padding: 60px 24px !important;
+  }
+
+  .features-section {
+    padding: 60px 24px !important;
+  }
+
+  .credibility-section {
+    padding: 40px 24px !important;
+  }
+
+  .waitlist-section {
+    padding: 60px 24px !important;
+  }
+
+  .footer-section {
+    padding: 24px !important;
+  }
+}

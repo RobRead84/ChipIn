@@ -5,7 +5,7 @@ const FORMSPREE_URL = "https://formspree.io/f/meepkwde";
 
 function Header() {
   return (
-    <header style={{
+    <header className="header-inner" style={{
       padding: '20px 32px',
       display: 'flex',
       justifyContent: 'space-between',
@@ -40,7 +40,7 @@ function Header() {
 
 function Hero() {
   return (
-    <section style={{
+    <section className="hero-section" style={{
       padding: '120px 32px 100px',
       maxWidth: '1000px',
     }}>
@@ -70,6 +70,7 @@ function Hero() {
       </motion.div>
 
       <motion.h1
+        className="hero-headline"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ type: 'spring', stiffness: 100, damping: 20, delay: 0.1 }}
@@ -144,7 +145,7 @@ function ProblemSection() {
   ];
 
   return (
-    <section style={{
+    <section className="problem-section" style={{
       background: 'var(--color-black)',
       color: 'var(--color-bg)',
       borderTop: '2px solid var(--color-black)',
@@ -170,7 +171,7 @@ function ProblemSection() {
           The problem is, you&apos;re only seeing a fraction of it. LinkedIn&apos;s feed is built around your existing network and engagement patterns — showing you more of what you&apos;ve already seen, and less of what you haven&apos;t discovered yet.
         </p>
 
-        <div style={{
+        <div className="pain-grid" style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(3, 1fr)',
           gap: '2px',
@@ -241,7 +242,7 @@ function FeaturesSection() {
     {
       label: 'DM RELIABILITY',
       title: 'Never miss a DM',
-      desc: 'LinkedIn notifications are unreliable. ChipIn delivers your direct messages consistently, so opportunities don\'t slip through the cracks.',
+      desc: 'LinkedIn notifications are unreliable. ChipIn delivers your direct messages consistently, so opportunities don&apos;t slip through the cracks.',
       hero: false,
     },
     {
@@ -252,14 +253,14 @@ function FeaturesSection() {
     },
     {
       label: 'YOUR NETWORK',
-      title: 'More from the network you\'ve already built',
+      title: 'More from the network you&apos;ve already built',
       desc: "You've spent years building your LinkedIn network. ChipIn helps you get more value from it by surfacing what the algorithm filters out.",
       hero: false,
     },
   ];
 
   return (
-    <section style={{
+    <section className="features-section" style={{
       padding: '80px 32px',
       maxWidth: '1000px',
     }}>
@@ -276,6 +277,7 @@ function FeaturesSection() {
       <div style={{ display: 'grid', gap: 0 }}>
         {features.map((feature, i) => (
           <div
+            className="feature-row"
             key={i}
             style={{
               display: 'grid',
@@ -312,11 +314,11 @@ function FeaturesSection() {
 
 function CredibilityStrip() {
   return (
-    <div style={{
+    <div className="credibility-section" style={{
       padding: '40px 32px',
       borderTop: '2px solid var(--color-border)',
     }}>
-      <div style={{
+      <div className="credibility-inner" style={{
         maxWidth: '1000px',
         display: 'flex',
         gap: '48px',
@@ -350,6 +352,7 @@ function WaitlistSection() {
   return (
     <section
       id="waitlist"
+      className="waitlist-section"
       style={{
         background: 'var(--color-black)',
         color: 'var(--color-bg)',
@@ -394,7 +397,7 @@ function WaitlistSection() {
           }
         }}
       >
-        <div style={{ display: 'flex', gap: 0 }}>
+        <div className="waitlist-form-row" style={{ display: 'flex', gap: 0 }}>
           <input
             type="email"
             name="email"
@@ -437,17 +440,20 @@ function WaitlistSection() {
 
 function Footer() {
   return (
-    <footer style={{
+    <footer className="footer-section" style={{
       padding: '24px 32px',
-      display: 'flex',
-      justifyContent: 'space-between',
-      fontSize: '0.75rem',
-      color: 'var(--color-muted)',
-      fontFamily: 'var(--font-space-mono), monospace',
       borderTop: '2px solid var(--color-border)',
     }}>
-      <span>CHIPIN — GET MORE FROM LINKEDIN</span>
-      <span>COMING SOON / iOS + ANDROID</span>
+      <div className="footer-inner" style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        fontSize: '0.75rem',
+        color: 'var(--color-muted)',
+        fontFamily: 'var(--font-space-mono), monospace',
+      }}>
+        <span>CHIPIN — GET MORE FROM LINKEDIN</span>
+        <span>COMING SOON / iOS + ANDROID</span>
+      </div>
     </footer>
   );
 }
