@@ -1,8 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
 
-const FORMSPREE_URL = "https://formspree.io/f/meepkwde";
-
 function Header() {
   return (
     <header className="header-inner sticky-header" style={{
@@ -391,63 +389,40 @@ function WaitlistSection() {
         Sign up for early access. Free. No commitment.
       </p>
 
-      <form
+      <div
+        className="google-form-container"
         style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '12px',
-          maxWidth: '480px',
+          background: '#ffffff',
+          borderRadius: '12px',
+          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+          padding: '20px',
+          maxWidth: '600px',
           margin: '0 auto',
         }}
-        onSubmit={async (e) => {
-          e.preventDefault();
-          const formData = new FormData(e.currentTarget);
-          const res = await fetch(FORMSPREE_URL, {
-            method: 'POST',
-            body: formData,
-          });
-          if (res.ok) {
-            e.currentTarget.innerHTML = '<p style="font-family: var(--font-space-mono), monospace; font-size: 1rem; color: var(--color-bg);">You are on the list!</p>';
-          }
-        }}
       >
-        <div className="waitlist-form-row" style={{ display: 'flex', gap: 0 }}>
-          <input
-            type="email"
-            name="email"
-            placeholder="your@email.com"
-            required
-            style={{
-              flex: 1,
-              padding: '16px 20px',
-              border: '2px solid var(--color-bg)',
-              background: 'transparent',
-              color: 'var(--color-bg)',
-              fontFamily: 'var(--font-space-mono), monospace',
-              fontSize: '0.85rem',
-            }}
-          />
-          <button
-            type="submit"
-            style={{
-              padding: '16px 28px',
-              background: 'var(--color-accent)',
-              color: 'var(--color-white)',
-              border: '2px solid var(--color-accent)',
-              fontFamily: 'var(--font-space-mono), monospace',
-              fontSize: '0.85rem',
-              fontWeight: 700,
-              textTransform: 'uppercase',
-              cursor: 'pointer',
-              letterSpacing: '0.05em',
-            }}
-          >
-            Join →
-          </button>
-        </div>
+        <iframe
+          src="https://docs.google.com/forms/d/e/1FAIpQLSdKMc8-ElSfjWgFJPoYWS7-yF79VLlKCjqu4_CKcfvMnQktkw/viewform?embedded=true&chrome=false"
+          width="100%"
+          height={1359}
+          frameBorder={0}
+          marginHeight={0}
+          marginWidth={0}
+          style={{
+            border: 'none',
+            borderRadius: '8px',
+          }}
+        >
+          Loading…
+        </iframe>
+      </div>
 
-        <input type="hidden" name="_to" value="chipin.waitlist" />
-      </form>
+      <style jsx>{`
+        @media (max-width: 480px) {
+          .google-form-container iframe {
+            height: 1400px !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }
