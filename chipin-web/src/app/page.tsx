@@ -41,7 +41,7 @@ function Header() {
 function Hero() {
   return (
     <section className="hero-section" style={{
-      padding: '120px 32px 100px',
+      padding: '60px 32px 100px',
       maxWidth: '1000px',
     }}>
       <motion.div
