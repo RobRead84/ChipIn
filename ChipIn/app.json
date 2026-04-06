@@ -1,0 +1,44 @@
+{
+  "expo": {
+    "name": "ChipIn",
+    "slug": "ChipIn",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "scheme": "chipin",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0077B5"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "app.chipin.mobile"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0077B5"
+      },
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false,
+      "package": "app.chipin.mobile"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-secure-store",
+      [
+        "expo-auth-session",
+        {
+          "redirectUriOptions": {
+            "scheme": "chipin"
+          }
+        }
+      ]
+    ]
+  }
+}
