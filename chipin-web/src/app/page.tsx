@@ -1,4 +1,5 @@
 "use client";
+import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 
 function Header() {
@@ -360,70 +361,191 @@ function CredibilityStrip() {
 }
 
 function WaitlistSection() {
-  return (
-    <section
-      id="waitlist"
-      className="waitlist-section"
-      style={{
-        background: 'var(--color-black)',
-        color: 'var(--color-bg)',
-        padding: '80px 32px',
-        textAlign: 'center',
-      }}
-    >
-      <h2 className="waitlist-heading" style={{
-        fontFamily: 'var(--font-archivo-black), Archivo Black, sans-serif',
-        fontSize: '2.5rem',
-        textTransform: 'uppercase',
-        lineHeight: 1.2,
-        marginBottom: '8px',
-        color: 'var(--color-bg)',
-      }}>
-        Be first to try it
-      </h2>
-      <p style={{
-        fontSize: '0.95rem',
-        color: 'var(--color-dim)',
-        marginBottom: '32px',
-      }}>
-        Sign up for early access. Free. No commitment.
-      </p>
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-      <div
-        className="google-form-container"
+  const openModal = useCallback(() => {
+    setIsModalOpen(true);
+    document.body.style.overflow = 'hidden';
+  }, []);
+
+  const closeModal = useCallback(() => {
+    setIsModalOpen(false);
+    document.body.style.overflow = '';
+  }, []);
+
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isModalOpen) {
+        closeModal();
+      }
+    };
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [isModalOpen, closeModal]);
+
+  useEffect(() => {
+    if (!isModalOpen) {
+      document.body.style.overflow = '';
+    }
+  }, [isModalOpen]);
+
+  return (
+    <>
+      <section
+        id="waitlist"
+        className="waitlist-section"
         style={{
-          background: '#ffffff',
-          borderRadius: '12px',
-          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
-          padding: '20px',
-          maxWidth: '600px',
-          margin: '0 auto',
+          background: 'var(--color-black)',
+          color: 'var(--color-bg)',
+          padding: '80px 32px',
+          textAlign: 'center',
         }}
       >
-        <iframe
-          src="https://docs.google.com/forms/d/e/1FAIpQLSdKMc8-ElSfjWgFJPoYWS7-yF79VLlKCjqu4_CKcfvMnQktkw/viewform?embedded=true&chrome=false"
-          width="100%"
-          height={1359}
-          frameBorder={0}
-          marginHeight={0}
-          marginWidth={0}
+        <h2 className="waitlist-heading" style={{
+          fontFamily: 'var(--font-archivo-black), Archivo Black, sans-serif',
+          fontSize: '2.5rem',
+          textTransform: 'uppercase',
+          lineHeight: 1.2,
+          marginBottom: '8px',
+          color: 'var(--color-bg)',
+        }}>
+          Be first to try it
+        </h2>
+        <p style={{
+          fontSize: '0.95rem',
+          color: 'var(--color-dim)',
+          marginBottom: '32px',
+        }}>
+          Sign up for early access. Free. No commitment.
+        </p>
+
+        <motion.button
+          onClick={openModal}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ type: 'spring', stiffness: 100, damping: 20 }}
           style={{
+            display: 'inline-block',
+            background: 'var(--color-accent)',
+            color: 'var(--color-black)',
+            padding: '18px 48px',
+            fontFamily: 'var(--font-space-mono), monospace',
+            fontSize: '0.9rem',
+            fontWeight: 700,
+            textTransform: 'uppercase',
+            letterSpacing: '0.1em',
+            textDecoration: 'none',
             border: 'none',
-            borderRadius: '8px',
+            cursor: 'pointer',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'translate(-3px, -3px)';
+            e.currentTarget.style.boxShadow = '5px 5px 0 var(--color-bg)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'translate(0, 0)';
+            e.currentTarget.style.boxShadow = 'none';
           }}
         >
-          Loading…
-        </iframe>
-      </div>
+          Sign up for early access
+        </motion.button>
+      </section>
 
-      <style jsx>{`
-        @media (max-width: 480px) {
-          .google-form-container iframe {
-            height: 1400px !important;
-          }
-        }
-      `}</style>
-    </section>
+      {isModalOpen && (
+        <div
+          className="modal-overlay"
+          onClick={closeModal}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'rgba(0, 0, 0, 0.7)',
+            backdropFilter: 'blur(8px)',
+            WebkitBackdropFilter: 'blur(8px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1000,
+            padding: '20px',
+          }}
+        >
+          <div
+            className="modal-content"
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              background: '#ffffff',
+              borderRadius: '12px',
+              boxShadow: '0 8px 40px rgba(0, 0, 0, 0.3)',
+              padding: '20px',
+              maxWidth: '600px',
+              width: '100%',
+              maxHeight: '90vh',
+              overflow: 'auto',
+              position: 'relative',
+            }}
+          >
+            <button
+              onClick={closeModal}
+              className="modal-close"
+              style={{
+                position: 'absolute',
+                top: '12px',
+                right: '12px',
+                background: 'transparent',
+                border: 'none',
+                fontSize: '1.5rem',
+                cursor: 'pointer',
+                color: '#666',
+                width: '36px',
+                height: '36px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: '50%',
+                transition: 'background 0.2s',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = '#f0f0f0';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'transparent';
+              }}
+              aria-label="Close modal"
+            >
+              ×
+            </button>
+            <iframe
+              src="https://docs.google.com/forms/d/e/1FAIpQLSdKMc8-ElSfjWgFJPoYWS7-yF79VLlKCjqu4_CKcfvMnQktkw/viewform?embedded=true&chrome=false"
+              width="100%"
+              height={1359}
+              frameBorder={0}
+              marginHeight={0}
+              marginWidth={0}
+              style={{
+                border: 'none',
+                borderRadius: '8px',
+              }}
+            >
+              Loading…
+            </iframe>
+          </div>
+
+          <style jsx>{`
+            @media (max-width: 480px) {
+              .modal-content {
+                max-height: 85vh;
+              }
+              .modal-overlay {
+                padding: 10px;
+                align-items: flex-start;
+              }
+            }
+          `}</style>
+        </div>
+      )}
+    </>
   );
 }
 
